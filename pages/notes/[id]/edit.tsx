@@ -4,17 +4,7 @@ import { getServerSession } from "next-auth/next";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
-import {
-  Box,
-  Button,
-  Container,
-  Heading,
-  Input,
-  Link,
-  Stack,
-  Text,
-  Textarea,
-} from "@chakra-ui/react";
+import { Box, Button, Container, Heading, Input, Link, Stack, Text, Textarea } from "@chakra-ui/react";
 
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -62,29 +52,29 @@ export default function EditNotePage({ note }: EditNoteProps) {
       <Head>
         <title>Upravit poznámku</title>
       </Head>
-      <Box minH="100vh" bg="#121416">
-        <Container maxW="3xl" py={10}>
-          <Box bg="#1b1f23" borderRadius="2xl" borderWidth="1px" borderColor="#313843" shadow="2xl" p={7}>
-            <Stack spacing={5}>
-              <Heading size="lg" color="#f3f5f8" letterSpacing="-0.02em">Upravit poznámku</Heading>
-              <form onSubmit={onSubmit}>
-                <Stack spacing={4}>
-                  <Box>
-                    <Text mb={1} fontWeight="medium" color="#c7d0db">Titulek</Text>
-                    <Input bg="#15191d" borderColor="#3a434f" color="#edf1f5" value={title} onChange={(e) => setTitle(e.target.value)} />
-                  </Box>
-                  <Box>
-                    <Text mb={1} fontWeight="medium" color="#c7d0db">Obsah</Text>
-                    <Textarea bg="#15191d" borderColor="#3a434f" color="#edf1f5" fontFamily="IBM Plex Mono, Consolas, monospace" value={content} onChange={(e) => setContent(e.target.value)} rows={12} />
-                  </Box>
-                  {error ? <Text color="#ff9eaa">{error}</Text> : null}
-                  <Button type="submit" colorScheme="blue" bg="#2d6fbf" _hover={{ bg: "#235c9f" }} isLoading={saving} alignSelf="flex-start">Uložit změny</Button>
-                </Stack>
-              </form>
-              <Link as={NextLink} href={`/notes/${note.id}`} color="#8bc8ff" fontWeight="semibold">Zpět na detail</Link>
-            </Stack>
-          </Box>
-        </Container>
+      <Box className="page-wrap">
+      <Container maxW="3xl" py={10}>
+        <Box className="paper-card" p={6}>
+          <Stack spacing={5}>
+            <Heading size="md" className="plain-title">Upravit poznámku</Heading>
+            <form onSubmit={onSubmit}>
+              <Stack spacing={4}>
+                <Box>
+                  <Text mb={1} className="muted">Titulek</Text>
+                  <Input borderRadius="2px" borderWidth="1px" borderColor="#3a4e70" bg="#0f1729" color="#e5ecf6" value={title} onChange={(e) => setTitle(e.target.value)} />
+                </Box>
+                <Box>
+                  <Text mb={1} className="muted">Obsah</Text>
+                  <Textarea borderRadius="2px" borderWidth="1px" borderColor="#3a4e70" bg="#0f1729" color="#e5ecf6" value={content} onChange={(e) => setContent(e.target.value)} rows={10} />
+                </Box>
+                {error ? <Text color="red.600">{error}</Text> : null}
+                <Button type="submit" borderRadius="2px" bg="#4fd1c5" color="#10202f" _hover={{ bg: "#36b8ab" }} isLoading={saving} alignSelf="flex-start">Uložit změny</Button>
+              </Stack>
+            </form>
+            <Link as={NextLink} href={`/notes/${note.id}`} color="#ff8f6b" fontWeight="semibold">Zpět na detail</Link>
+          </Stack>
+        </Box>
+      </Container>
       </Box>
     </>
   );

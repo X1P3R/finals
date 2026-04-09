@@ -1,31 +1,29 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap");
-
 :root {
-  --background: #121416;
-  --foreground: #eceef1;
+  --bg: #0f1722;
+  --bg-2: #111827;
+  --surface: #172133;
+  --surface-2: #1e2a40;
+  --text: #e5ecf6;
+  --muted: #9fb0c9;
+  --line: #2f415f;
+  --accent: #4fd1c5;
+  --accent-2: #ff8f6b;
 }
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: "Manrope", "Trebuchet MS", "Verdana", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-image: radial-gradient(circle at 18% 12%, #1d2329 0, transparent 36%),
-    radial-gradient(circle at 84% 4%, #222a32 0, transparent 34%),
-    linear-gradient(180deg, #111416 0%, #15191d 100%);
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  background-image: radial-gradient(circle at 8% 10%, #1b2b48 0%, transparent 30%),
+    radial-gradient(circle at 88% 5%, #3f2d4f 0%, transparent 26%),
+    linear-gradient(180deg, var(--bg), var(--bg-2));
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
 a {
@@ -34,26 +32,36 @@ a {
 }
 
 .note-content {
-  display: grid;
-  gap: 14px;
+  white-space: pre-wrap;
+  line-height: 1.7;
 }
 
-.note-content p {
-  color: #d6dce3;
-  line-height: 1.8;
+.page-wrap {
+  min-height: 100vh;
+  padding: 28px 0;
+}
+
+.paper-card {
+  background: linear-gradient(180deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  box-shadow: 6px 6px 0 rgba(5, 9, 15, 0.7);
+}
+
+.plain-title {
   letter-spacing: 0.01em;
 }
 
-.note-content pre {
-  margin: 0;
-  white-space: pre-wrap;
-  word-break: break-word;
-  border: 1px solid #313843;
-  border-radius: 12px;
-  background: #171b20;
-  color: #d6ebff;
-  padding: 14px;
-  line-height: 1.6;
-  font-size: 0.92rem;
-  font-family: "IBM Plex Mono", "Consolas", monospace;
+.muted {
+  color: var(--muted);
+}
+
+.chip {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 12px;
+  color: #d6e2f3;
+  background: rgba(255, 255, 255, 0.06);
 }

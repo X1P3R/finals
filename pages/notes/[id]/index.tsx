@@ -3,16 +3,7 @@ import NextLink from "next/link";
 import { getServerSession } from "next-auth/next";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import {
-  Box,
-  Button,
-  Container,
-  Heading,
-  HStack,
-  Link,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Container, Heading, HStack, Link, Stack, Text } from "@chakra-ui/react";
 
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -26,27 +17,6 @@ type NoteDetailProps = {
     updatedAt: string;
   };
 };
-
-function renderNoteContent(content: string) {
-  const normalized = content.trim();
-  if (!normalized) {
-    return <p>(prázdný obsah)</p>;
-  }
-
-  return normalized.split(/\n\s*\n/).map((block, index) => {
-    const text = block.trim();
-    const lines = text.split("\n");
-    const codeLike =
-      lines.length > 2 &&
-      /(^\s*(import|export|const|let|await|model|return|if|for)\b)|([{}();]|=>)/m.test(text);
-
-    if (codeLike) {
-      return <pre key={index}>{text}</pre>;
-    }
-
-    return <p key={index}>{text}</p>;
-  });
-}
 
 export default function NoteDetailPage({ note }: NoteDetailProps) {
   const router = useRouter();
@@ -71,28 +41,28 @@ export default function NoteDetailPage({ note }: NoteDetailProps) {
       <Head>
         <title>{note.title}</title>
       </Head>
-      <Box minH="100vh" bg="#121416">
-        <Container maxW="3xl" py={10}>
-          <Box bg="#1b1f23" borderRadius="2xl" borderWidth="1px" borderColor="#313843" shadow="2xl" p={7}>
-            <Stack spacing={5}>
-              <HStack justify="space-between" align="flex-start" flexWrap="wrap" spacing={4}>
-                <Heading size="lg" color="#f3f5f8" letterSpacing="-0.02em" maxW="2xl">{note.title}</Heading>
-                <HStack>
-                  <Button as="a" href={`/api/notes/export?id=${note.id}`} colorScheme="cyan" variant="outline" borderColor="#4b6278" color="#b8e7ff">Export JSON</Button>
-                  <Button as={NextLink} href={`/notes/${note.id}/edit`} colorScheme="blue" bg="#2d6fbf" _hover={{ bg: "#235c9f" }}>Upravit</Button>
-                  <Button onClick={onDelete} colorScheme="red" variant="outline" borderColor="#8f4b55" color="#ffb4c0">Smazat</Button>
-                </HStack>
+      <Box className="page-wrap">
+      <Container maxW="3xl" py={10}>
+        <Box className="paper-card" p={6}>
+          <Stack spacing={5}>
+            <HStack justify="space-between" align="center" flexWrap="wrap">
+              <Heading size="md" className="plain-title">{note.title}</Heading>
+              <HStack>
+                <Button as="a" href={`/api/notes/export?id=${note.id}`} borderRadius="2px" borderWidth="1px" borderColor="#4fd1c5" color="#4fd1c5" variant="outline">Export JSON</Button>
+                <Button as={NextLink} href={`/notes/${note.id}/edit`} borderRadius="2px" bg="#4fd1c5" color="#10202f" _hover={{ bg: "#36b8ab" }}>Upravit</Button>
+                <Button onClick={onDelete} borderRadius="2px" borderWidth="1px" borderColor="#ff8f6b" color="#ff8f6b" variant="outline">Smazat</Button>
               </HStack>
+            </HStack>
 
-              <Box className="note-content" minH="120px">{renderNoteContent(note.content)}</Box>
+            <Text className="note-content" color="#d7e4f7">{note.content || "(prázdný obsah)"}</Text>
 
-              <Text color="#8f9baa" fontSize="sm">Vytvořeno: {new Date(note.createdAt).toLocaleString("cs-CZ")}</Text>
-              <Text color="#8f9baa" fontSize="sm">Upraveno: {new Date(note.updatedAt).toLocaleString("cs-CZ")}</Text>
+            <Text color="#9fb0c9" fontSize="sm">Vytvořeno: {new Date(note.createdAt).toLocaleString("cs-CZ")}</Text>
+            <Text color="#9fb0c9" fontSize="sm">Upraveno: {new Date(note.updatedAt).toLocaleString("cs-CZ")}</Text>
 
-              <Link as={NextLink} href="/notes" color="#8bc8ff" fontWeight="semibold">Zpět na seznam</Link>
-            </Stack>
-          </Box>
-        </Container>
+            <Link as={NextLink} href="/notes" color="#ff8f6b" fontWeight="semibold">Zpět na seznam</Link>
+          </Stack>
+        </Box>
+      </Container>
       </Box>
     </>
   );

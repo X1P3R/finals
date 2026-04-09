@@ -6,18 +6,7 @@ import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import type { Note } from "@prisma/client";
-import {
-  Box,
-  Button,
-  Container,
-  Heading,
-  Input,
-  Link,
-  Stack,
-  Text,
-  Textarea,
-  HStack,
-} from "@chakra-ui/react";
+import { Box, Button, Container, Heading, Input, Link, Stack, Text, Textarea, HStack } from "@chakra-ui/react";
 
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -57,7 +46,6 @@ export default function NotesPage({ notes, userName }: NotesPageProps) {
     });
 
     const data = (await response.json().catch(() => ({}))) as { error?: string };
-
     setSaving(false);
 
     if (!response.ok) {
@@ -94,11 +82,7 @@ export default function NotesPage({ notes, userName }: NotesPageProps) {
         body: JSON.stringify(parsed),
       });
 
-      const data = (await response.json().catch(() => ({}))) as {
-        error?: string;
-        created?: number;
-      };
-
+      const data = (await response.json().catch(() => ({}))) as { error?: string; created?: number };
       setImporting(false);
 
       if (!response.ok) {
@@ -122,71 +106,71 @@ export default function NotesPage({ notes, userName }: NotesPageProps) {
       <Head>
         <title>Poznámky</title>
       </Head>
-      <Box minH="100vh" bg="#121416">
-        <Container maxW="4xl" py={10}>
-          <Stack spacing={6}>
-            <HStack justify="space-between" align="flex-start">
-              <Stack spacing={1}>
-                <Heading size="lg" color="#f3f5f8" letterSpacing="-0.02em">Moje poznámky</Heading>
-                <Text color="#a8b3c1">Přihlášen: {userName}</Text>
-              </Stack>
-              <HStack>
-                <Button as="a" href="/api/notes/export" colorScheme="cyan" variant="outline" borderColor="#4b6278" color="#b8e7ff">Export všeho</Button>
-                <Button onClick={() => signOut({ callbackUrl: "/login" })} bg="#2b3139" color="#dae1ea" _hover={{ bg: "#343c46" }}>Odhlásit</Button>
-              </HStack>
+      <Box className="page-wrap">
+      <Container maxW="4xl" py={10}>
+        <Stack spacing={6}>
+          <HStack justify="space-between" align="flex-start">
+            <Stack spacing={1}>
+              <Heading size="md" className="plain-title">Moje poznámky</Heading>
+              <Text className="muted">Přihlášen: {userName}</Text>
+            </Stack>
+            <HStack>
+              <Button as="a" href="/api/notes/export" borderRadius="2px" borderWidth="1px" borderColor="#4fd1c5" color="#4fd1c5" variant="outline">Export všeho</Button>
+              <Button onClick={() => signOut({ callbackUrl: "/login" })} borderRadius="2px" bg="#2b364d" color="white" _hover={{ bg: "#34415b" }}>Odhlásit</Button>
             </HStack>
+          </HStack>
 
-            <Box bg="#1b1f23" borderRadius="2xl" borderWidth="1px" borderColor="#313843" shadow="2xl" p={6}>
-              <Heading size="md" mb={4}>Nová poznámka</Heading>
-              <form onSubmit={createNote}>
-                <Stack spacing={3}>
-                  <Box>
-                    <Text mb={1} fontWeight="medium" color="#c7d0db">Titulek</Text>
-                    <Input bg="#15191d" borderColor="#3a434f" color="#edf1f5" value={title} onChange={(e) => setTitle(e.target.value)} />
-                  </Box>
-                  <Box>
-                    <Text mb={1} fontWeight="medium" color="#c7d0db">Obsah</Text>
-                    <Textarea bg="#15191d" borderColor="#3a434f" color="#edf1f5" fontFamily="IBM Plex Mono, Consolas, monospace" value={content} onChange={(e) => setContent(e.target.value)} rows={8} />
-                  </Box>
-                  <Button type="submit" colorScheme="blue" bg="#2d6fbf" _hover={{ bg: "#235c9f" }} isLoading={saving} alignSelf="flex-start">Uložit poznámku</Button>
-                </Stack>
-              </form>
-            </Box>
-
-            <Box bg="#1b1f23" borderRadius="2xl" borderWidth="1px" borderColor="#313843" shadow="2xl" p={6}>
-              <Heading size="md" mb={4}>Import JSON</Heading>
-              <form onSubmit={importNotes}>
-                <HStack align="end" spacing={3} flexWrap="wrap">
-                  <Box maxW="md">
-                    <Text mb={1} fontWeight="medium" color="#c7d0db">Soubor .json</Text>
-                    <Input name="json" type="file" accept="application/json,.json" bg="#15191d" borderColor="#3a434f" color="#edf1f5" />
-                  </Box>
-                  <Button type="submit" colorScheme="cyan" bg="#0b6c73" _hover={{ bg: "#0f7f87" }} isLoading={importing}>Importovat</Button>
-                </HStack>
-              </form>
-              <Text mt={3} color="#98a6b6" fontSize="sm">Limit importu: max 1 MB a max 100 položek na požadavek.</Text>
-            </Box>
-
-            {error ? <Text color="#ff9eaa">{error}</Text> : null}
-            {info ? <Text color="#8fdfa9">{info}</Text> : null}
-
-            <Box bg="#1b1f23" borderRadius="2xl" borderWidth="1px" borderColor="#313843" shadow="2xl" p={6}>
-              <Heading size="md" mb={4}>Seznam poznámek</Heading>
+          <Box className="paper-card" p={5}>
+            <Heading size="sm" mb={4}>Nová poznámka</Heading>
+            <form onSubmit={createNote}>
               <Stack spacing={3}>
-                {notes.length === 0 ? <Text color="#b4beca">Nemáte zatím žádné poznámky.</Text> : null}
-                {notes.map((note) => (
-                  <Box key={note.id} borderWidth="1px" borderColor="#323a45" borderRadius="lg" p={4} bg="#171b20" transition="all 0.18s" _hover={{ borderColor: "#4a5665", transform: "translateY(-1px)" }}>
-                    <Stack spacing={2}>
-                      <Link as={NextLink} href={`/notes/${note.id}`} color="#9ed2ff" fontWeight="bold">{note.title}</Link>
-                      <Text noOfLines={2} color="#c4ced9">{note.content || "(prázdný obsah)"}</Text>
-                      <Text fontSize="sm" color="#8f9baa">Aktualizováno: {new Date(note.updatedAt).toLocaleString("cs-CZ")}</Text>
-                    </Stack>
-                  </Box>
-                ))}
+                <Box>
+                  <Text mb={1} className="muted">Titulek</Text>
+                  <Input borderRadius="2px" borderWidth="1px" borderColor="#3a4e70" bg="#0f1729" color="#e5ecf6" value={title} onChange={(e) => setTitle(e.target.value)} />
+                </Box>
+                <Box>
+                  <Text mb={1} className="muted">Obsah</Text>
+                  <Textarea borderRadius="2px" borderWidth="1px" borderColor="#3a4e70" bg="#0f1729" color="#e5ecf6" value={content} onChange={(e) => setContent(e.target.value)} rows={8} />
+                </Box>
+                <Button type="submit" borderRadius="2px" bg="#4fd1c5" color="#10202f" _hover={{ bg: "#36b8ab" }} isLoading={saving} alignSelf="flex-start">Uložit poznámku</Button>
               </Stack>
-            </Box>
-          </Stack>
-        </Container>
+            </form>
+          </Box>
+
+          <Box className="paper-card" p={5}>
+            <Heading size="sm" mb={4}>Import JSON</Heading>
+            <form onSubmit={importNotes}>
+              <HStack align="end" spacing={3} flexWrap="wrap">
+                <Box maxW="md">
+                  <Text mb={1} className="muted">Soubor .json</Text>
+                  <Input borderRadius="2px" borderWidth="1px" borderColor="#3a4e70" bg="#0f1729" color="#e5ecf6" name="json" type="file" accept="application/json,.json" />
+                </Box>
+                <Button type="submit" borderRadius="2px" bg="#ff8f6b" color="#1a1a1a" _hover={{ bg: "#e67a56" }} isLoading={importing}>Importovat</Button>
+              </HStack>
+            </form>
+            <Text mt={3} className="muted" fontSize="sm">Limit importu: max 1 MB a max 100 položek na požadavek.</Text>
+          </Box>
+
+          {error ? <Text color="red.600">{error}</Text> : null}
+          {info ? <Text color="green.700">{info}</Text> : null}
+
+          <Box className="paper-card" p={5}>
+            <Heading size="sm" mb={4}>Seznam poznámek</Heading>
+            <Stack spacing={3}>
+              {notes.length === 0 ? <Text>Nemáte zatím žádné poznámky.</Text> : null}
+              {notes.map((note) => (
+                <Box key={note.id} borderWidth="1px" borderColor="#395078" borderRadius="2px" p={4} bg="#121a2b">
+                  <Stack spacing={2}>
+                    <Link as={NextLink} href={`/notes/${note.id}`} color="#9ae9df" fontWeight="semibold">{note.title}</Link>
+                    <Text noOfLines={2} color="#d7e4f7">{note.content || "(prázdný obsah)"}</Text>
+                    <Text fontSize="sm" color="#9fb0c9">Aktualizováno: {new Date(note.updatedAt).toLocaleString("cs-CZ")}</Text>
+                  </Stack>
+                </Box>
+              ))}
+            </Stack>
+          </Box>
+        </Stack>
+      </Container>
       </Box>
     </>
   );

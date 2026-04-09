@@ -1,0 +1,30 @@
+
+> prjkt@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.5
+  - Local:        http://localhost:3000
+  - Environments: .env.local, .env
+
+ ✓ Starting...
+ ✓ Ready in 2.8s
+ ○ Compiling /login ...
+ ✓ Compiled /login in 5.9s (1304 modules)
+ GET /login 200 in 1993ms
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 5.7s (1326 modules)
+ GET /api/auth/session 200 in 6069ms
+ GET /api/auth/session 200 in 6070ms
+ GET /api/auth/session 200 in 6071ms
+ GET /api/auth/session 200 in 6072ms
+ GET /login 200 in 2040ms
+ GET /api/auth/session 200 in 6ms
+ GET /api/auth/session 200 in 7ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 3ms
+ GET /login 200 in 104ms
+ GET /api/auth/session 200 in 3ms
+ GET /login 200 in 34ms
+ ○ Compiling /notes ...
+ ✓ Compiled /notes in 1015ms (1333 modules)
+ GET /notes 307 in 1057ms
