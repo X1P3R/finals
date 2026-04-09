@@ -19,7 +19,7 @@ Použitá technologie:
 
 ## Odkaz na repozitář
 
-GitHub repo: https://github.com/X1P3R/finalos.git
+GitHub repo: https://github.com/X1P3R/finals.git
 
 ## Požadavky
 
