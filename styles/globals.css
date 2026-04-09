@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+:root {
+  --background: #121416;
+  --foreground: #eceef1;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: "Manrope", "Trebuchet MS", "Verdana", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: radial-gradient(circle at 18% 12%, #1d2329 0, transparent 36%),
+    radial-gradient(circle at 84% 4%, #222a32 0, transparent 34%),
+    linear-gradient(180deg, #111416 0%, #15191d 100%);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.note-content {
+  display: grid;
+  gap: 14px;
+}
+
+.note-content p {
+  color: #d6dce3;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+}
+
+.note-content pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  border: 1px solid #313843;
+  border-radius: 12px;
+  background: #171b20;
+  color: #d6ebff;
+  padding: 14px;
+  line-height: 1.6;
+  font-size: 0.92rem;
+  font-family: "IBM Plex Mono", "Consolas", monospace;
+}
